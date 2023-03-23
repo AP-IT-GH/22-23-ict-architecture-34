@@ -2,6 +2,5 @@
 
 ## Groepsleden
 * Raf Vanhoegaerden
-* Nestor Lenaerts
 * Frederik Meuldermans
 * Kevin Van Rooy
