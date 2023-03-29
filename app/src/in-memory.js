@@ -1,9 +1,21 @@
+<<<<<<< HEAD
 const files = [{
     id: 1,
     mimetype: 'image/png',
     size: 12345,
     filename: 'test.png'
 }];
+=======
+
+// example file:
+// {
+//     id: 1,
+//     mimetype: 'image/png',
+//     size: 12345,
+//     filename: 'test.png'
+// }
+const files = [];
+>>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
 
 async function createUpload(mimetype, size, filename) {
     // get highest id from files array
@@ -22,7 +34,11 @@ async function getUpload(id) {
 }
 
 async function deleteUpload(id) {
+<<<<<<< HEAD
     const index = files.findIndex(file => file.id === id);
+=======
+    const index = files.findIndex(file => file.id === +id);
+>>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
     if (index !== -1) {
         files.splice(index, 1);
     }
