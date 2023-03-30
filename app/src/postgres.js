@@ -5,7 +5,7 @@ const pool = new pg.Pool({connectionString: connectionString});
 
 async function createUpload(mimetype, size, filename) {
     const result = await pool.query('INSERT INTO uploads (mimetype, size, filename) VALUES ($1, $2, $3) RETURNING id', [mimetype, size, filename]);
-    return result.rows[0].id;
+    return result.rows[0];
 }
 
 async function getUploads() {

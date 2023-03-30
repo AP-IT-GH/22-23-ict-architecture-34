@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const multer = require('multer');
 const upload = multer({dest: '../files/'}).single('file');
-//const {createUpload, getUpload, getUploads, deleteUpload} = require('./postgres');
-const {createUpload, getUpload, getUploads, deleteUpload} = require('./in-memory');
+const {createUpload, getUpload, getUploads, deleteUpload} = require('./postgres');
+//const {createUpload, getUpload, getUploads, deleteUpload} = require('./in-memory');
 const {uploadToS3, downloadFromS3} = require('./s3');
 
 const router = Router();

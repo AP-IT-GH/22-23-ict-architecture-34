@@ -6,6 +6,12 @@
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:0-18-bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
+
+	"remoteEnv": {
+		"POSTGRES_USER": "postgres",
+        "POSTGRES_PASSWORD": "Newpassword",
+		"DATABASE_URL": "postgresql://postgres:Newpassword@localhost/postgres"
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
