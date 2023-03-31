@@ -9,12 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "express": "^4.18.2",
-=======
     "@aws-sdk/client-s3": "^3.299.0",
     "express": "^5.0.0-beta.1",
->>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
     "luxon": "^3.2.1",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.8.0"
