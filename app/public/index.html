@@ -71,8 +71,6 @@
 
         const table = document.querySelector('#table');
 
-<<<<<<< HEAD
-=======
         function refreshData() {
             console.log('refreshing data');
             fetch('/api/uploads')
@@ -104,7 +102,6 @@
         }
         
 
->>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
         function createDeleteButton(upload) {
             const button = document.createElement('button');
             button.textContent = 'Verwijder';
@@ -117,10 +114,7 @@
                 .then(response => response.json())
                 .then(result => {
                     console.log('Success:', result);
-<<<<<<< HEAD
-=======
                     refreshData();
->>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -143,35 +137,8 @@
             return button;
         }
 
-<<<<<<< HEAD
-        fetch('/api/uploads')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(upload => {
-                    const row = document.createElement('tr');
-                    const id = document.createElement('td');
-                    id.textContent = upload.id;
-                    row.appendChild(id);
-
-                    const name = document.createElement('td');
-                    name.textContent = upload.filename;
-                    row.appendChild(name);
-                    const filesize = document.createElement('td');
-                    filesize.textContent = upload.size;
-                    row.appendChild(filesize);
-                    const open = document.createElement('td');
-                    open.appendChild(createOpenButton(upload))
-                    row.appendChild(open);
-                    const del = document.createElement('td');
-                    del.appendChild(createDeleteButton(upload))
-                    row.appendChild(del);
-                    table.appendChild(row);
-                });
-            });
-=======
         refreshData();
         
->>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
 
         const form = document.querySelector('form');
         form.addEventListener('submit', (e) => {
@@ -186,10 +153,7 @@
                 document.getElementById('filename').value = '';
                 document.getElementById('file').value = '';
                 console.log('Success:', result);
-<<<<<<< HEAD
-=======
                 this.refreshData();
->>>>>>> c6e7b5bd23956af42ce152dd0bca866125d7dda2
             })
             .catch(error => {
                 console.error('Error:', error);
