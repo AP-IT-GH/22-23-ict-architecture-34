@@ -14,15 +14,20 @@ const router = Router();
 router.get("/", (req, res) => {
   res.json("Hello World!");
 });
-
 // upload functionality for images. Use multer to handle the upload.
 router.post("/uploads", upload, async (req, res) => {
   const { filename } = req.body;
-  const { mimetype, size } = req.file;
-  const { id } = await createUpload(mimetype, size, filename);
 
-  await uploadToS3(req.file.path, id.toString());
-  res.json({ id });
+  //prevent app from crashing when no file is uploaded
+  if (req.file) {
+    const { mimetype, size } = req.file;
+    const { id } = await createUpload(mimetype, size, filename);
+
+    await uploadToS3(req.file.path, id.toString());
+    res.json({ id });
+  } else {
+    res.status(400).json({ error: "No file attached to the request" });
+  }
 });
 
 router.get("/uploads", async (req, res) => {
