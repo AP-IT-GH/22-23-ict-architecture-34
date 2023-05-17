@@ -4,15 +4,19 @@ const { S3Client, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/clien
 const sharp = require('sharp');
 
 const bucket = process.env.BUCKET;
+const resizedBucket = process.env.RESIZED_BUCKET;
 const region = process.env.REGION;
+const accessKeyId = process.env.ACCESS_KEY_ID;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const sessionToken = process.env.SESSION_TOKEN;
 
 const s3 = new S3Client({
     region,
-    credentials: process.env.ACCESS_KEY_ID ? {
-        accessKeyId: process.env.ACCESS_KEY_ID,
-        secretAccessKey: process.env.SECRET_ACCESS_KEY,
-        sessionToken: process.env.SESSION_TOKEN
-    } : null,
+    credentials: accessKeyId ? {
+        accessKeyId,
+        secretAccessKey,
+        sessionToken
+    } : undefined,
 });
 
 /**
@@ -25,7 +29,7 @@ module.exports.handler = async (event, context) => {
 
     for (let record of event.Records) {
         const { objectKey, sizes, quality } = JSON.parse(record.body);
-            
+
         try {
             await resizeImage(objectKey, sizes, quality);
         } catch (err) {
@@ -52,7 +56,7 @@ async function resizeImage(objectKey, sizes, quality = 70) {
 
     for (let size of sizes.split(',')) {
 
-        const {width, height} = getNewDimensions(metadata, size)
+        const { width, height } = getNewDimensions(metadata, size)
 
         const resizedImage = await input
             .resize(Math.round(width), Math.round(height))
@@ -62,12 +66,12 @@ async function resizeImage(objectKey, sizes, quality = 70) {
         const key = `${objectKey.split('.')[0]}-resized-${size}.jpg`;
         const putObjectCommand = new PutObjectCommand({
             Body: resizedImage,
-            Bucket: bucket,
+            Bucket: resizedBucket,
             ContentType: 'image/jpeg',
             Key: key,
         });
 
-        console.log('putting object to s3', bucket, key);
+        console.log('putting object to s3', resizedBucket, key);
         await s3.send(putObjectCommand);
     }
 }
@@ -114,8 +118,8 @@ function getDimensions(size) {
 function streamToBuffer(stream) {
     return new Promise((resolve, reject) => {
         const chunks = [];
-        stream.on("data", (chunk) => chunks.push(chunk));
-        stream.on("error", reject);
-        stream.on("end", () => resolve(Buffer.concat(chunks)));
+        stream.on('data', (chunk) => chunks.push(chunk));
+        stream.on('error', reject);
+        stream.on('end', () => resolve(Buffer.concat(chunks)));
     });
 }
