@@ -1,0 +1,13 @@
+{
+  "name": "auto-send-to-sqs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r ./index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1027.0",
+    "dotenv": "^10.0.0"
+  }
+}
