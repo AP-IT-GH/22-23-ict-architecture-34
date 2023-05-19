@@ -12,6 +12,8 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install --only=prod
+
+COPY ssl/ ./ssl/
 COPY . .
 
 CMD ["npm", "start"]
