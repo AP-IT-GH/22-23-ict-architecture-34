@@ -4,13 +4,28 @@ services:
     build: ./app
     restart: always
     ports:
-      - "80:80"
+      - "443:443"
     volumes:
       - ./.env:/app/.env
     depends_on:
       - db
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -h db -p 5432 -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth:
+    build: ./auth
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./.env:/auth/.env
+    depends_on:
+      - db
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:3000 || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
