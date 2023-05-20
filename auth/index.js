@@ -1,4 +1,3 @@
-
 const express = require('express');
 const axios = require('axios');
 const qs = require('qs');
@@ -15,7 +14,7 @@ dotenvExpand.expand(dotenv.config());
 // Configure session middleware
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Replace with your session secret
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -26,16 +25,21 @@ app.get('/', (req, res) => {
   const code = req.query.code;
 
   // Perform the token exchange
-  axios.post(process.env.AXIOS_POST, qs.stringify({
-    grant_type: 'authorization_code',
-    client_id: process.env.CLIENT_ID,
-    redirect_uri: process.env.REDIRECT_URL,
-    code: code
-  }), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
+  axios
+    .post(
+      process.env.AXIOS_POST,
+      qs.stringify({
+        grant_type: 'authorization_code',
+        client_id: process.env.CLIENT_ID,
+        redirect_uri: process.env.REDIRECT_URL,
+        code: code,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    )
     .then(response => {
       // Handle the token exchange response
       const tokens = response.data;
@@ -52,14 +56,6 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/uploads', (req, res) => {
-  // Access the email stored in the session
-  const email = req.session.email;
-
-  // Use the email for further processing or retrieve data for that user
-
-  res.send(`Email: ${email}`);
-});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
