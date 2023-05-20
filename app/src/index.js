@@ -10,6 +10,9 @@ const app = express();
 // Serve static files from the "public" directory
 app.use(express.static("public"));
 
+// Use the API routes
+app.use("/api", apiRoute);
+
 // Load SSL/TLS certificate and key
 const options = {
   key: fs.readFileSync("ssl/private.key"),
