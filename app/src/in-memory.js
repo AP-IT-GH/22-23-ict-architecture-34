@@ -4,21 +4,14 @@ const files = [
     mimetype: "image/png",
     size: 12345,
     filename: "test.png",
+    email: "example@example.com",
   },
 ];
 
-// example file:
-// {
-//     id: 1,
-//     mimetype: 'image/png',
-//     size: 12345,
-//     filename: 'test.png'
-// }
-
-async function createUpload(mimetype, size, filename) {
-  // get highest id from files array
+async function createUpload(mimetype, size, filename, email) {
+  // get the highest id from the files array
   const id = files.reduce((max, file) => Math.max(max, file.id), 0) + 1;
-  const file = { id, mimetype, size, filename };
+  const file = { id, mimetype, size, filename, email };
   files.push(file);
   return file;
 }
