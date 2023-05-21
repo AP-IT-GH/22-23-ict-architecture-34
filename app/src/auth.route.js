@@ -8,6 +8,14 @@ router.get('/', (req, res) => {
   res.redirect(process.env.AUTH_URL);
 });
 
+
+router.get('/logout', (req, res) => {
+  // Clear the user session or remove the user token
+  delete req.session.userToken;
+  delete req.session.userEmail;
+  res.redirect(process.env.ROOT_URL);
+});
+
 router.get('/callback', async (req, res) => {
   const code = req.query.code;
 
@@ -37,12 +45,24 @@ router.get('/callback', async (req, res) => {
 
     // Redirect the user back to main page
     const redirectUrl = process.env.ROOT_URL;
-    res.redirect(redirectUrl);
+    res.redirect(process.env.ROOT_URL);
 
   } catch (error) {
     console.error('Token exchange failed:', error);
     res.status(500).send('Token exchange failed');
   }
 });
+
+
+router.post('/userEmail', (req, res) => {
+  const { email } = req.body;
+  req.session.userEmail = email;
+  res.sendStatus(200);
+});
+
+router.get('/userEmail', (req, res) => {
+  res.send(req.session.userEmail);
+});
+
 
 module.exports = router;

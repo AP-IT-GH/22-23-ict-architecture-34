@@ -7,6 +7,7 @@ const {
   getUpload,
   getUploads,
   deleteUpload,
+  getUploadsByUserEmail,
 } = require("./postgres");
 const { uploadToS3, downloadFromS3 } = require("./s3");
 
@@ -64,9 +65,20 @@ router.post("/uploads", upload, async (req, res) => {
 });
 
 
-router.get("/uploads", async (req, res) => {
-  const uploads = await getUploads();
-  res.json(uploads);
+router.get('/uploads', async (req, res) => {
+  if (!req.session.userToken) {
+    return res.status(401).json({ error: 'User not logged in.' });
+  }
+  else{
+    try {
+      const userEmail = req.session.userEmail;
+      const uploads = await getUploadsByUserEmail(userEmail);
+      res.json(uploads);
+    } catch (error) {
+      console.error('Error retrieving uploads:', error);
+      res.status(500).json({ error: 'Failed to retrieve uploads' });
+    }
+  }
 });
 
 router.get("/uploads/:id", async (req, res) => {
@@ -83,11 +95,6 @@ router.get("/file/:id", async (req, res) => {
   const upload = await getUpload(req.params.id);
   const body = await downloadFromS3(req.params.id);
   body.pipe(res);
-});
-
-router.get("/email", (req, res) => {
-  const email = req.session.email;
-  res.send(`Stored email: ${email}`);
 });
 
 module.exports = router;
