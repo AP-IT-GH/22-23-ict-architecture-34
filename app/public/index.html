@@ -32,7 +32,7 @@
             <button class="btn btn-primary" type="submit" name="submit" >Upload bestand</button>
         </form>
     </section>
-    <button class="btn btn-primary position-fixed top-0 end-0 m-3" onclick="redirectToCognito()">Log In</button>
+    <button class="btn btn-primary position-fixed top-0 end-0 m-3" onclick="redirectToAuthentication()">Log In</button>
     
     <section class="container my-3">
 
@@ -161,8 +161,8 @@
             });
         });
 
-        function redirectToCognito() {
-            window.location.href = "https://kevinvanrooy.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=1td8520vsep1jn12m9j72hpc80&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fkevinvanrooy.be";
+        function redirectToAuthentication() {
+            window.location.href = "/auth";
         }
 
         $('#exampleModal').on('show.bs.modal', function (event) {
