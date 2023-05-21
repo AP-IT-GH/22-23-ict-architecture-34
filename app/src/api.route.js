@@ -49,16 +49,16 @@ router.post("/uploads", upload, async (req, res) => {
 
     if (!email) {
       console.log("Email value not found in session");
-    }
-
-    try {
-      const { id } = await createUpload(mimetype, size, filename, email);
-      await uploadToS3(req.file.path, id.toString());
-      res.json({ id });
-    } catch (error) {
-      console.error("Error creating upload:", error);
-      res.status(500).json({ error: "Error creating upload" });
-    }
+    } else{
+        try {
+          const { id } = await createUpload(mimetype, size, filename, email);
+          await uploadToS3(req.file.path, id.toString());
+          res.json({ id });
+        } catch (error) {
+          console.error("Error creating upload:", error);
+          res.status(500).json({ error: "Error creating upload" });
+        }
+      }
   } else {
     res.status(400).json({ error: "No file attached to the request" });
   }
