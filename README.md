@@ -43,7 +43,7 @@
 
 # Onderhoud EC2 (Debian 11)
 
-## Starten van de applicatie op EC2
+## Herstarten van de applicatie op EC2
 
 - docker-compose down --remove-orphans
 - docker-compose up
