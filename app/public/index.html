@@ -11,6 +11,10 @@
 <body>
     <section class="container my-3">
         <h1 id="userEmail"></h1id>>Bestandsbeheer</h1>
+        <div style="display: flex;">
+            <button class="btn btn-primary" style="margin-right: 10px;" onclick="redirectToAuthentication()">Log In</button>
+            <button class="btn btn-primary" style="margin-left: 10px;" onclick="redirectToDaarIsDeDeur()">Log Out</button>
+        </div>  
     </section>
     <section class="container my-3">
         <h2>Laad nieuw bestand op</h2>
@@ -32,9 +36,6 @@
             <button class="btn btn-primary" type="submit" name="submit" >Upload bestand</button>
         </form>
     </section>
-    <button class="btn btn-primary position-fixed top-0 end-0 m-3" onclick="redirectToAuthentication()">Log In</button>
-    <button class="btn btn-primary position-fixed top-2 end-0 m-3" onclick="redirectToDaarIsDeDeur()">Log Out</button>
-    
     <section class="container my-3">
 
         <h2>Opgeladen bestanden</h2>
