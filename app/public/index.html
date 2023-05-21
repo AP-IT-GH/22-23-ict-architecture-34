@@ -10,7 +10,7 @@
 </head>
 <body>
     <section class="container my-3">
-        <h1>Bestandsbeheer</h1>
+        <h1 id="userEmail"></h1id>>Bestandsbeheer</h1>
     </section>
     <section class="container my-3">
         <h2>Laad nieuw bestand op</h2>
@@ -33,6 +33,7 @@
         </form>
     </section>
     <button class="btn btn-primary position-fixed top-0 end-0 m-3" onclick="redirectToAuthentication()">Log In</button>
+    <button class="btn btn-primary position-fixed top-2 end-0 m-3" onclick="redirectToDaarIsDeDeur()">Log Out</button>
     
     <section class="container my-3">
 
@@ -56,7 +57,7 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title" id="modalTitle">Modal title</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -79,7 +80,7 @@
             .then(data => {
                 table.innerHTML = '';
                 data.forEach(upload => {
-                    
+
                     const row = document.createElement('tr');
                     const id = document.createElement('td');
                     id.textContent = upload.id;
@@ -99,7 +100,7 @@
                     row.appendChild(del);
                     table.appendChild(row);
                 });
-            });
+            }).catch(error => console.error(error));
         }
         
 
@@ -125,18 +126,19 @@
         }
 
         function createOpenButton(upload) {
-            const button = document.createElement('button');
-            button.textContent = 'Open';
-            button.classList.add('btn');
-            button.classList.add('btn-primary');
-            button.attributes['data-id'] = upload.id;
-            button.addEventListener('click', () => {
-                const modal = new bootstrap.Modal('#exampleModal', {})
-                modal.show(button);
-                
-            });
-            return button;
-        }
+    const button = document.createElement('button');
+    button.textContent = 'Open';
+    button.classList.add('btn');
+    button.classList.add('btn-primary');
+    button.attributes['data-id'] = upload.id;
+    button.addEventListener('click', () => {
+        const modal = new bootstrap.Modal('#exampleModal', {});
+        modal.show(button);
+        const modalTitle = document.getElementById('modalTitle');
+        modalTitle.textContent = upload.filename; // Set the modal title to the filename
+    });
+    return button;
+}
 
         refreshData();
         
@@ -165,6 +167,10 @@
             window.location.href = "/auth";
         }
 
+        function redirectToDaarIsDeDeur() {
+            window.location.href = "/auth/logout";
+        }
+
         $('#exampleModal').on('show.bs.modal', function (event) {
             var id = event.relatedTarget.attributes['data-id']
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -172,6 +178,19 @@
             var modal = $(this)
             modal.find('#img').attr('src', '/api/file/' + id)
         })
+
+
+        const userEmailElement = document.getElementById('userEmail');
+        fetch('/auth/userEmail')
+            .then(response => response.text())
+            .then(userEmail => {
+                userEmailElement.textContent = `Bestandsbeheer ${userEmail}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+
         
     </script>
     

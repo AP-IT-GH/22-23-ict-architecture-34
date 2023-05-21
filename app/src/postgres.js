@@ -22,6 +22,11 @@ async function getUpload(id) {
   return result.rows[0];
 }
 
+async function getUploadsByUserEmail(email) {
+  const result = await pool.query('SELECT * FROM uploads WHERE email = $1', [email]);
+  return result.rows;
+}
+
 async function deleteUpload(id) {
   await pool.query('DELETE FROM uploads WHERE id = $1', [id]);
 }
@@ -50,6 +55,7 @@ module.exports = {
   getUploads,
   getUpload,
   deleteUpload,
+  getUploadsByUserEmail,
 };
 
 console.log('creating table if not exists...');
