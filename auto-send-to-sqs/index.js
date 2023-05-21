@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     console.log("the key of the object is: " + objectKey);
     const message = {
       objectKey: objectKey,
-      sizes: "large,640x360",
+      sizes: "large,medium,small,64x64",
       quality: 85,
     };
 
